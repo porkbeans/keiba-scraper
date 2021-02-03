@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "keiba-scraper"
+version = "0.1.0"
+description = ""
+authors = ["porkbeans <mizuo.taka@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+scrapy = "^2.4.1"
+selenium = "^3.141.0"
+botocore = "^1.20.0"
+google-cloud-storage = "^1.35.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
