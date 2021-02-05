@@ -29,7 +29,7 @@ visualize = ["graphviz (>0.5.1)", "Twisted (>=16.1.1)"]
 
 [[package]]
 name = "botocore"
-version = "1.20.0"
+version = "1.20.2"
 description = "Low-level, data-driven core of boto 3."
 category = "main"
 optional = false
@@ -133,7 +133,7 @@ grpcio-gcp = ["grpcio-gcp (>=0.2.2)"]
 
 [[package]]
 name = "google-auth"
-version = "1.24.0"
+version = "1.25.0"
 description = "Google Authentication Library"
 category = "main"
 optional = false
@@ -602,8 +602,8 @@ automat = [
     {file = "Automat-20.2.0.tar.gz", hash = "sha256:7979803c74610e11ef0c0d68a2942b152df52da55336e0c9d58daf1831cbdf33"},
 ]
 botocore = [
-    {file = "botocore-1.20.0-py2.py3-none-any.whl", hash = "sha256:634b39ab0d55477cfbffb0e5dff31b7ab4bb171b04a0c69f8bcf65135f26ba94"},
-    {file = "botocore-1.20.0.tar.gz", hash = "sha256:a608d6d644b852f3c154fc433eaae52febbebc7c474fa8f4d666797d0931770a"},
+    {file = "botocore-1.20.2-py2.py3-none-any.whl", hash = "sha256:7442fdbbdc841bfac7f94f92ecb807de070e32ed205743eb72d4ea27c5e8e778"},
+    {file = "botocore-1.20.2.tar.gz", hash = "sha256:bf587b044983a91a0124cc133ff167b8528c19fbbc8f0b956d9a1ac256cad7d7"},
 ]
 cachetools = [
     {file = "cachetools-4.2.1-py3-none-any.whl", hash = "sha256:1d9d5f567be80f7c07d765e21b814326d78c61eb0c3a637dffc0e5d1796cb2e2"},
@@ -684,8 +684,8 @@ google-api-core = [
     {file = "google_api_core-1.25.1-py2.py3-none-any.whl", hash = "sha256:292dd636ed381098d24b7093ccb826b2278a12d886a3fc982084069aa24a8fbb"},
 ]
 google-auth = [
-    {file = "google-auth-1.24.0.tar.gz", hash = "sha256:0b0e026b412a0ad096e753907559e4bdb180d9ba9f68dd9036164db4fdc4ad2e"},
-    {file = "google_auth-1.24.0-py2.py3-none-any.whl", hash = "sha256:ce752cc51c31f479dbf9928435ef4b07514b20261b021c7383bee4bda646acb8"},
+    {file = "google-auth-1.25.0.tar.gz", hash = "sha256:514e39f4190ca972200ba33876da5a8857c5665f2b4ccc36c8b8ee21228aae80"},
+    {file = "google_auth-1.25.0-py2.py3-none-any.whl", hash = "sha256:008e23ed080674f69f9d2d7d80db4c2591b9bb307d136cea7b3bc129771d211d"},
 ]
 google-cloud-core = [
     {file = "google-cloud-core-1.5.0.tar.gz", hash = "sha256:1277a015f8eeb014c48f2ec094ed5368358318f1146cf49e8de389962dc19106"},
