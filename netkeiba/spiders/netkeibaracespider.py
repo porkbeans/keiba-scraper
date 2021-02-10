@@ -135,7 +135,7 @@ class NetkeibaRaceSpider(scrapy.Spider):
                     'kyori_min': '',
                     'kyori_max': '',
                     'sort': 'date',
-                    'list': '20',
+                    'list': '100',
                 },
                 encoding='euc-jp',
                 callback=self.parse_search_page
