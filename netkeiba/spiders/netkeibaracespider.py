@@ -78,6 +78,7 @@ class NetkeibaRaceSpider(scrapy.Spider):
                 'trainer_name': result.xpath('./td[19]/a/text()').get(),
                 'owner_id': result.xpath('./td[20]/a/@href').re_first(r'/owner/(.+)/'),
                 'owner_name': result.xpath('./td[20]/a/text()').get(),
+                'prize': result.xpath('./td[21]/text()').get(),
             })
 
         yield race_data
