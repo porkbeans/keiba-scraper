@@ -58,28 +58,55 @@ class NetkeibaRaceSpider(scrapy.Spider):
             if result.xpath('./th').get() is not None:
                 continue
 
-            race_data['race_results'].append({
-                'finishing_order': result.xpath('./td[1]/text()').get(),
-                'passing_order': result.xpath('./td[12]/text()').get(),
-                'time_record': result.xpath('./td[8]/text()').get(),
-                'sprint_time_record': result.xpath('./td[13]/text()').get(),
-                'frame_number': result.xpath('./td[2]//text()').get(),
-                'horse_number': result.xpath('./td[3]/text()').get(),
-                'horse_id': result.xpath('./td[4]/a/@href').re_first(r'/horse/(.+)/'),
-                'horse_name': result.xpath('./td[4]/a/text()').get(),
-                'horse_sex': result.xpath('./td[5]/text()').re_first(r'(\w)\d+'),
-                'horse_age': result.xpath('./td[5]/text()').re_first(r'\w(\d+)'),
-                'horse_weight': result.xpath('./td[15]/text()').re_first(r'(\d+)\([+\-]?\d+\)'),
-                'horse_weight_diff': result.xpath('./td[15]/text()').re_first(r'\d+\(([+\-]?\d+)\)'),
-                'jockey_id': result.xpath('./td[7]/a/@href').re_first(r'/jockey/(.+)/'),
-                'jockey_name': result.xpath('./td[7]/a/text()').get(),
-                'jockey_weight': result.xpath('./td[6]/text()').get(),
-                'trainer_id': result.xpath('./td[19]/a/@href').re_first(r'/trainer/(.+)/'),
-                'trainer_name': result.xpath('./td[19]/a/text()').get(),
-                'owner_id': result.xpath('./td[20]/a/@href').re_first(r'/owner/(.+)/'),
-                'owner_name': result.xpath('./td[20]/a/text()').get(),
-                'prize': result.xpath('./td[21]/text()').get(),
-            })
+            num_cols = len(result.xpath('./td'))
+            if num_cols == 21:
+                # schema after 1986
+                race_data['race_results'].append({
+                    'finishing_order': result.xpath('./td[1]/text()').get(),
+                    'passing_order': result.xpath('./td[12]/text()').get(),
+                    'time_record': result.xpath('./td[8]/text()').get(),
+                    'sprint_time_record': result.xpath('./td[13]/text()').get(),
+                    'frame_number': result.xpath('./td[2]//text()').get(),
+                    'horse_number': result.xpath('./td[3]/text()').get(),
+                    'horse_id': result.xpath('./td[4]/a/@href').re_first(r'/horse/(.+)/'),
+                    'horse_name': result.xpath('./td[4]/a/text()').get(),
+                    'horse_sex': result.xpath('./td[5]/text()').re_first(r'(\w)\d+'),
+                    'horse_age': result.xpath('./td[5]/text()').re_first(r'\w(\d+)'),
+                    'horse_weight': result.xpath('./td[15]/text()').re_first(r'(\d+)\([+\-]?\d+\)'),
+                    'horse_weight_diff': result.xpath('./td[15]/text()').re_first(r'\d+\(([+\-]?\d+)\)'),
+                    'jockey_id': result.xpath('./td[7]/a/@href').re_first(r'/jockey/(.+)/'),
+                    'jockey_name': result.xpath('./td[7]/a/text()').get(),
+                    'jockey_weight': result.xpath('./td[6]/text()').get(),
+                    'trainer_id': result.xpath('./td[19]/a/@href').re_first(r'/trainer/(.+)/'),
+                    'trainer_name': result.xpath('./td[19]/a/text()').get(),
+                    'owner_id': result.xpath('./td[20]/a/@href').re_first(r'/owner/(.+)/'),
+                    'owner_name': result.xpath('./td[20]/a/text()').get(),
+                    'prize': result.xpath('./td[21]/text()').get(),
+                })
+            elif num_cols == 14:
+                # schema before 1986
+                race_data['race_results'].append({
+                    'finishing_order': result.xpath('./td[1]/text()').get(),
+                    'passing_order': None,
+                    'time_record': result.xpath('./td[8]/text()').get(),
+                    'sprint_time_record': None,
+                    'frame_number': result.xpath('./td[2]//text()').get(),
+                    'horse_number': result.xpath('./td[3]/text()').get(),
+                    'horse_id': result.xpath('./td[4]/a/@href').re_first(r'/horse/(.+)/'),
+                    'horse_name': result.xpath('./td[4]/a/text()').get(),
+                    'horse_sex': result.xpath('./td[5]/text()').re_first(r'(\w)\d+'),
+                    'horse_age': result.xpath('./td[5]/text()').re_first(r'\w(\d+)'),
+                    'horse_weight': None,
+                    'horse_weight_diff': None,
+                    'jockey_id': result.xpath('./td[7]/a/@href').re_first(r'/jockey/(.+)/'),
+                    'jockey_name': result.xpath('./td[7]/a/text()').get(),
+                    'jockey_weight': result.xpath('./td[6]/text()').get(),
+                    'trainer_id': result.xpath('./td[12]/a/@href').re_first(r'/trainer/(.+)/'),
+                    'trainer_name': result.xpath('./td[12]/a/text()').get(),
+                    'owner_id': result.xpath('./td[13]/a/@href').re_first(r'/owner/(.+)/'),
+                    'owner_name': result.xpath('./td[13]/a/text()').get(),
+                    'prize': result.xpath('./td[14]/text()').get(),
+                })
 
         yield race_data
 
@@ -95,6 +122,7 @@ class NetkeibaRaceSpider(scrapy.Spider):
                 'location_name': race_summary.xpath('./td[2]/a/text()').get(),
                 'race_order_in_day': race_summary.xpath('./td[4]/text()').get(),
                 'race_id': race_summary.xpath('./td[5]/a/@href').re_first(r'/race/(.+)/'),
+                'num_horses': race_summary.xpath('./td[8]/text()').get(),
             }
 
             yield scrapy.Request(
