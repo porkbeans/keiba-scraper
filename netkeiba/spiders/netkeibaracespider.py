@@ -23,13 +23,13 @@ class NetkeibaRaceSpider(scrapy.Spider):
 
         race_data = response.meta['race_data']
         race_data['race_name'] = race_name
-        race_data['race_condition'] = dict()
-        race_data['race_condition']['has_turf'] = '芝' in race_conditions[0]
-        race_data['race_condition']['has_dirt'] = 'ダ' in race_conditions[0]
-        race_data['race_condition']['has_obstacle'] = '障' in race_conditions[0]
+        race_data['race_condition'] = {
+            'has_turf': '芝' in race_conditions[0],
+            'has_dirt': 'ダ' in race_conditions[0],
+            'has_obstacle': '障' in race_conditions[0],
+        }
 
-        distance_match = re.match(r'\D*\s*0*(?P<distance>\d+)m', race_conditions[0])
-        if distance_match is None:
+        if (distance_match := re.match(r'\D*\s*0*(?P<distance>\d+)m', race_conditions[0])) is None:
             race_data['race_distance'] = None
         else:
             race_data['race_distance'] = int(distance_match.group('distance'))
@@ -53,10 +53,7 @@ class NetkeibaRaceSpider(scrapy.Spider):
                 race_data['other_data'].append(f'{key}={val}')
 
         race_data['race_results'] = []
-        for result in response.css('table.race_table_01 tr'):
-            # Skip header row
-            if result.xpath('./th').get() is not None:
-                continue
+        for result in response.css('table.race_table_01 tr')[1:]:
 
             num_cols = len(result.xpath('./td'))
             if num_cols == 21:
@@ -111,11 +108,7 @@ class NetkeibaRaceSpider(scrapy.Spider):
         yield race_data
 
     def parse_search_page(self, response: scrapy.http.Response):
-        for race_summary in response.xpath('//table[@summary="レース検索結果"]//tr'):
-            # Skip header row
-            if race_summary.xpath('./th').get() is not None:
-                continue
-
+        for race_summary in response.xpath('//table[@summary="レース検索結果"]//tr')[1:]:
             race_data = {
                 'race_date': race_summary.xpath('./td[1]/a/text()').get().replace('/', '-'),
                 'location_id': race_summary.xpath('./td[2]/a/@href').re_first(r'/race/sum/(.+)/.+/'),
