@@ -62,7 +62,6 @@ class NetkeibaRaceSpider(scrapy.Spider):
             xpath_link_text = './a/text()'
 
             if num_cols == 21:
-                # schema after 1986
                 race_data['race_results'].append({
                     'finishing_order': columns[0].xpath(xpath_text).get(),
                     'passing_order': columns[10].xpath(xpath_text).get(),
@@ -86,7 +85,6 @@ class NetkeibaRaceSpider(scrapy.Spider):
                     'prize': columns[20].xpath(xpath_text).get(),
                 })
             elif num_cols == 14:
-                # schema before 1986
                 race_data['race_results'].append({
                     'finishing_order': columns[0].xpath(xpath_text).get(),
                     'passing_order': None,
