@@ -1,7 +1,11 @@
+import os
 import re
 from datetime import datetime, timedelta, timezone
 
 import scrapy
+from scrapy.exceptions import NotConfigured
+
+from netkeiba.utils import login
 
 
 class NetkeibaRaceSpider(scrapy.Spider):
@@ -146,6 +150,12 @@ class NetkeibaRaceSpider(scrapy.Spider):
             )
 
     def start_requests(self):
+        email = self.crawler.settings.get('NETKEIBA_EMAIL') or os.getenv('NETKEIBA_EMAIL')
+        password = self.crawler.settings.get('NETKEIBA_PASSWORD') or os.getenv('NETKEIBA_PASSWORD')
+
+        if email is None or password is None:
+            raise NotConfigured('NETKEIBA_EMAIL or NETKEIBA_PASSWORD is not set.')
+
         return [
             scrapy.FormRequest(
                 url='https://db.netkeiba.com/',
@@ -161,6 +171,7 @@ class NetkeibaRaceSpider(scrapy.Spider):
                     'sort': 'date',
                     'list': '100',
                 },
+                cookies=login(email=email, password=password),
                 encoding='euc-jp',
                 callback=self.parse_search_page
             ),
