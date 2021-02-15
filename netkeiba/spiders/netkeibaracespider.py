@@ -86,6 +86,8 @@ class NetkeibaRaceSpider(scrapy.Spider):
                     'trainer_name': columns[18].xpath(xpath_link_text).get(),
                     'owner_id': columns[19].xpath(xpath_link_url).re_first(r'/owner/(.+)/'),
                     'owner_name': columns[19].xpath(xpath_link_text).get(),
+                    'win_odds': columns[12].xpath(xpath_text).get(),
+                    'popularity_order': columns[13].xpath(xpath_text).get(),
                     'prize': columns[20].xpath(xpath_text).get(),
                 })
             elif num_cols == 14:
@@ -109,6 +111,8 @@ class NetkeibaRaceSpider(scrapy.Spider):
                     'trainer_name': columns[11].xpath(xpath_link_text).get(),
                     'owner_id': columns[12].xpath(xpath_link_url).re_first(r'/owner/(.+)/'),
                     'owner_name': columns[12].xpath(xpath_link_text).get(),
+                    'win_odds': columns[9].xpath(xpath_text).get(),
+                    'popularity_order': columns[10].xpath(xpath_text).get(),
                     'prize': columns[13].xpath(xpath_text).get(),
                 })
 
