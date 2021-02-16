@@ -38,8 +38,6 @@ class NetkeibaRaceSpider(scrapy.Spider):
         else:
             race_data['race_distance'] = int(distance_match.group('distance'))
 
-        race_data['other_data'] = []
-
         for condition in race_conditions[1:]:
             if len(condition) == 0:
                 continue
@@ -53,8 +51,6 @@ class NetkeibaRaceSpider(scrapy.Spider):
                 race_data['race_condition']['dirt_condition'] = val
             elif key == '発走':
                 race_data['start_time'] = f"{race_data['race_date']} {val}"
-            else:
-                race_data['other_data'].append(f'{key}={val}')
 
         race_data['race_results'] = []
         for result in response.css('table.race_table_01 tr')[1:]:
