@@ -52,7 +52,7 @@ class NetkeibaRaceSpider(scrapy.Spider):
             elif key == '発走':
                 race_data['start_time'] = f"{race_data['race_date']} {val}"
 
-        race_data['race_results'] = []
+        race_data['horses'] = []
         for result in response.css('table.race_table_01 tr')[1:]:
             columns = result.xpath('.//td')
             num_cols = len(columns)
@@ -62,7 +62,7 @@ class NetkeibaRaceSpider(scrapy.Spider):
             xpath_link_text = './a/text()'
 
             if num_cols == 21:
-                race_data['race_results'].append({
+                race_data['horses'].append({
                     'finishing_order': columns[0].xpath(xpath_text).get(),
                     'passing_order': columns[10].xpath(xpath_text).get(),
                     'time_record': columns[7].xpath(xpath_text).get(),
@@ -87,7 +87,7 @@ class NetkeibaRaceSpider(scrapy.Spider):
                     'prize': columns[20].xpath(xpath_text).get(),
                 })
             elif num_cols == 14:
-                race_data['race_results'].append({
+                race_data['horses'].append({
                     'finishing_order': columns[0].xpath(xpath_text).get(),
                     'passing_order': None,
                     'time_record': columns[7].xpath(xpath_text).get(),
