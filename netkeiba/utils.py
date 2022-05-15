@@ -1,6 +1,7 @@
 import typing
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 from netkeiba.errors import LoginError
 
@@ -13,9 +14,9 @@ def login(email: str, password: str) -> typing.List[typing.Dict]:
     driver = webdriver.Chrome(options=options)
 
     driver.get('https://regist.netkeiba.com/account/?pid=login')
-    driver.find_element_by_xpath('//input[@name="login_id"]').send_keys(email)
-    driver.find_element_by_xpath('//input[@name="pswd"]').send_keys(password)
-    driver.find_element_by_xpath('//input[@alt="ログイン"]').click()
+    driver.find_element(by=By.XPATH, value='//input[@name="login_id"]').send_keys(email)
+    driver.find_element(by=By.XPATH, value='//input[@name="pswd"]').send_keys(password)
+    driver.find_element(by=By.XPATH, value='//input[@alt="ログイン"]').click()
 
     cookies = driver.get_cookies()
 
