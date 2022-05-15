@@ -5,11 +5,11 @@ description = ""
 authors = ["porkbeans <mizuo.taka@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-scrapy = "^2.4.1"
-selenium = "^3.141.0"
-botocore = "^1.20.0"
-google-cloud-storage = "^1.35.1"
+python = "^3.10.4"
+scrapy = "~2.6.1"
+selenium = "^4.1"
+botocore = "^1.26"
+google-cloud-storage = "^2.3.0"
 
 [tool.poetry.dev-dependencies]
 
